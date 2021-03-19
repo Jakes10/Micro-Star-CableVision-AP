@@ -6,12 +6,21 @@ import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Month;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -30,6 +39,11 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import javax.swing.border.MatteBorder;
 import java.awt.SystemColor;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JInternalFrame;
+import javax.swing.JToolBar;
 
 
 public class Main {
@@ -52,6 +66,28 @@ public class Main {
 	private JButton mainBtnDelete; 
 	private JLabel timeAndDate;
 	private JTextField textField;
+	private JTextField technician_id;
+	private JTextField created_at;
+	private JTextField updated_at;
+	private JTextField txt_updated_at;
+	private JTextField txt_created_at;
+	private JTextField cost;
+	private JTextField description;
+	private JTextField reponse_id;
+	private JTextField representative_id;
+	private JTextField customer_id;
+	private JTextField complaint_id;
+	private JTextField txt_customer_id;
+	private JTextField txt_created_at1;
+	private JTextField txt_updated_at1;
+	private JTextField rep_1;
+	private JTextField created_at_;
+	private JTextField updated_at_;
+	private JTextField respond_id;
+	private JTextField technician_id_;
+	private JTextField customer_id_;
+	private JTextField created_at_1;
+	private JTextField updated_at_1;
 	/**
 	 * Launch the application.
 	 */
@@ -301,6 +337,67 @@ public class Main {
 		btnDeleteRecords.setBounds(406, 392, 140, 43);
 		dashboardPanel.add(btnDeleteRecords);
 		
+		JLabel lblNewLabel_5 = new JLabel("Representative ");
+		lblNewLabel_5.setBounds(91, 63, 103, 14);
+		dashboardPanel.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_5_1 = new JLabel("Created At");
+		lblNewLabel_5_1.setBounds(91, 138, 103, 14);
+		dashboardPanel.add(lblNewLabel_5_1);
+		
+		JLabel lblNewLabel_5_2 = new JLabel("Updated At");
+		lblNewLabel_5_2.setBounds(91, 207, 103, 14);
+		dashboardPanel.add(lblNewLabel_5_2);
+		
+		rep_1 = new JTextField();
+		rep_1.setBounds(322, 60, 160, 33);
+		dashboardPanel.add(rep_1);
+		rep_1.setColumns(10);
+		
+		created_at_ = new JTextField();
+		created_at_.setColumns(10);
+		created_at_.setBounds(322, 135, 160, 33);
+		dashboardPanel.add(created_at_);
+		
+		updated_at_ = new JTextField();
+		updated_at_.setColumns(10);
+		updated_at_.setBounds(322, 198, 160, 33);
+		dashboardPanel.add(updated_at_);
+		
+		JButton btnNewButton = new JButton("Assign Representative");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Connection con = null;
+				PreparedStatement pst = null;
+				ResultSet rs = null;
+				
+				
+				
+				try{
+					String sql = "INSERT INTO representatives"
+					+"(representative_id, created_at,updated_at) "
+					+"VALUES (?,?,?)";
+					con = DriverManager.getConnection("jdbc:mysql://localhost/micro_star","root","");
+					pst = con.prepareStatement(sql);
+					pst.setString(1,rep_1.getText());
+					pst.setString(2,created_at_.getText());
+					pst.setString(3,updated_at_.getText());		
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "inserted successfully");
+					 
+					}
+					catch(SQLException | HeadlessException ex){
+					JOptionPane.showMessageDialog(null, ex);
+					}
+		
+			}
+						
+			
+		});
+		btnNewButton.setBounds(322, 257, 176, 33);
+		dashboardPanel.add(btnNewButton);
+		
 		servicePanel = new JPanel();
 		servicePanel.setBackground(new Color(220, 220, 220));
 		selectPanel.add(servicePanel, "name_46042517729470");
@@ -314,6 +411,143 @@ public class Main {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(74, 77, 595, 2);
 		servicePanel.add(separator);
+		
+		txt_updated_at = new JTextField();
+		txt_updated_at.setColumns(10);
+		txt_updated_at.setBounds(348, 401, 153, 31);
+		servicePanel.add(txt_updated_at);
+		
+		txt_created_at = new JTextField();
+		txt_created_at.setColumns(10);
+		txt_created_at.setBounds(348, 347, 153, 31);
+		servicePanel.add(txt_created_at);
+		
+		cost = new JTextField();
+		cost.setColumns(10);
+		cost.setBounds(348, 305, 153, 31);
+		servicePanel.add(cost);
+		
+		description = new JTextField();
+		description.setColumns(10);
+		description.setBounds(348, 247, 153, 31);
+		servicePanel.add(description);
+		
+		reponse_id = new JTextField();
+		reponse_id.setColumns(10);
+		reponse_id.setBounds(348, 205, 153, 31);
+		servicePanel.add(reponse_id);
+		
+		representative_id = new JTextField();
+		representative_id.setColumns(10);
+		representative_id.setBounds(348, 163, 153, 31);
+		servicePanel.add(representative_id);
+		
+		customer_id = new JTextField();
+		customer_id.setColumns(10);
+		customer_id.setBounds(348, 121, 153, 31);
+		servicePanel.add(customer_id);
+		
+		complaint_id = new JTextField();
+		complaint_id.setColumns(10);
+		complaint_id.setBounds(348, 79, 153, 31);
+		servicePanel.add(complaint_id);
+		
+		JLabel lblNewLabel_3 = new JLabel("Complaint ID");
+		lblNewLabel_3.setBounds(158, 90, 93, 14);
+		servicePanel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Customer ID");
+		lblNewLabel_3_1.setBounds(158, 129, 93, 14);
+		servicePanel.add(lblNewLabel_3_1);
+		
+		JLabel lblNewLabel_3_2 = new JLabel("Representative ID");
+		lblNewLabel_3_2.setBounds(158, 171, 109, 14);
+		servicePanel.add(lblNewLabel_3_2);
+		
+		JLabel lblNewLabel_3_3 = new JLabel("Response ID");
+		lblNewLabel_3_3.setBounds(158, 213, 109, 14);
+		servicePanel.add(lblNewLabel_3_3);
+		
+		JLabel lblNewLabel_3_4 = new JLabel("Description ID");
+		lblNewLabel_3_4.setBounds(158, 259, 93, 14);
+		servicePanel.add(lblNewLabel_3_4);
+		
+		JLabel lblNewLabel_3_5 = new JLabel("Cost");
+		lblNewLabel_3_5.setBounds(158, 313, 93, 14);
+		servicePanel.add(lblNewLabel_3_5);
+		
+		JLabel lblNewLabel_3_6 = new JLabel("Created At");
+		lblNewLabel_3_6.setBounds(158, 362, 71, 14);
+		servicePanel.add(lblNewLabel_3_6);
+		
+		JLabel lblNewLabel_3_7 = new JLabel("Updated At");
+		lblNewLabel_3_7.setBounds(158, 409, 71, 14);
+		servicePanel.add(lblNewLabel_3_7);
+		
+		JButton btnLodgeComplaint = new JButton("Lodge Complaint");
+		btnLodgeComplaint.setBounds(512, 402, 109, 27);
+		servicePanel.add(btnLodgeComplaint);
+		btnLodgeComplaint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Connection con = null;
+				PreparedStatement pst = null;
+				ResultSet rs = null;
+				
+				
+				
+				try{
+					String sql = "INSERT INTO complaints"
+					+"(complaint_id, customer_id,representative_id,response_id,description,cost,created_at,updated_at) "
+					+"VALUES (?,?,?,?,?,?,?,?)";
+					con = DriverManager.getConnection("jdbc:mysql://localhost/micro_star","root","");
+					pst = con.prepareStatement(sql);
+					pst.setString(1,complaint_id.getText());
+					pst.setString(2,customer_id.getText());
+					pst.setString(3,representative_id.getText());
+					
+					pst.setString(4,reponse_id.getText());
+					pst.setString(5,description.getText());
+					pst.setString(6,cost.getText());
+					pst.setString(7,txt_created_at.getText());
+					pst.setString(8,txt_updated_at.getText());
+			
+			
+					
+					
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "inserted successfully");
+					 
+					}
+					catch(SQLException | HeadlessException ex){
+					JOptionPane.showMessageDialog(null, ex);
+					}
+			
+
+			
+				
+
+				
+			}
+		});
+		
+			
+			btnLodgeComplaint.setIconTextGap(0);
+			btnLodgeComplaint.setForeground(Color.DARK_GRAY);
+			btnLodgeComplaint.setFont(new Font("Dialog", Font.PLAIN, 13));
+			btnLodgeComplaint.setFocusable(false);
+			btnLodgeComplaint.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+			btnLodgeComplaint.setBackground(new Color(211, 211, 211));
+			
+			JButton btnMakeQuery = new JButton("Make Query");
+			btnMakeQuery.setBounds(631, 402, 109, 27);
+			servicePanel.add(btnMakeQuery);
+			btnMakeQuery.setIconTextGap(0);
+			btnMakeQuery.setForeground(Color.DARK_GRAY);
+			btnMakeQuery.setFont(new Font("Dialog", Font.PLAIN, 13));
+			btnMakeQuery.setFocusable(false);
+			btnMakeQuery.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+			btnMakeQuery.setBackground(new Color(211, 211, 211));
 		
 		
 		complaintsPanel = new JPanel();
@@ -351,7 +585,7 @@ public class Main {
             	
             	}
         });
-        btnNewButton_2.setBounds(318, 407, 89, 26);
+        btnNewButton_2.setBounds(461, 407, 89, 26);
         complaintsPanel.add(btnNewButton_2);
         
         JButton btnViewAll = new JButton("View All");
@@ -365,7 +599,7 @@ public class Main {
         	}
 
         });
-        btnViewAll.setBounds(431, 407, 98, 26);
+        btnViewAll.setBounds(579, 407, 98, 26);
         complaintsPanel.add(btnViewAll);
         
         searchSingle = new JTextField();
@@ -399,6 +633,95 @@ public class Main {
 		separator_5.setBounds(87, 21, 595, 2);
 		respondPanel.add(separator_5);
 		
+		respond_id = new JTextField();
+		respond_id.setBounds(411, 78, 160, 34);
+		respondPanel.add(respond_id);
+		respond_id.setColumns(10);
+		
+		technician_id_ = new JTextField();
+		technician_id_.setColumns(10);
+		technician_id_.setBounds(411, 123, 160, 34);
+		respondPanel.add(technician_id_);
+		
+		customer_id_ = new JTextField();
+		customer_id_.setColumns(10);
+		customer_id_.setBounds(411, 168, 160, 34);
+		respondPanel.add(customer_id_);
+		
+		JLabel lblNewLabel_6 = new JLabel("Response id");
+		lblNewLabel_6.setBounds(138, 88, 83, 14);
+		respondPanel.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_6_1 = new JLabel("Technician id");
+		lblNewLabel_6_1.setBounds(138, 137, 83, 14);
+		respondPanel.add(lblNewLabel_6_1);
+		
+		JLabel lblNewLabel_6_1_1 = new JLabel("Customer id");
+		lblNewLabel_6_1_1.setBounds(138, 183, 83, 14);
+		respondPanel.add(lblNewLabel_6_1_1);
+		
+		JLabel lblNewLabel_7 = new JLabel("Created At");
+		lblNewLabel_7.setBounds(138, 239, 83, 14);
+		respondPanel.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_7_1 = new JLabel("Updated At");
+		lblNewLabel_7_1.setBounds(138, 286, 83, 14);
+		respondPanel.add(lblNewLabel_7_1);
+		
+		created_at_1 = new JTextField();
+		created_at_1.setColumns(10);
+		created_at_1.setBounds(411, 229, 160, 34);
+		respondPanel.add(created_at_1);
+		
+		updated_at_1 = new JTextField();
+		updated_at_1.setColumns(10);
+		updated_at_1.setBounds(411, 283, 160, 34);
+		respondPanel.add(updated_at_1);
+		
+		JButton btnNewButton_1 = new JButton("Add Response");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection con = null;
+				PreparedStatement pst = null;
+				ResultSet rs = null;
+				
+				
+				
+				try{
+					String sql = "INSERT INTO responses"
+					+"(response_id, technician_id,customer_id,created_at,updated_at) "
+					+"VALUES (?,?,?,?)";
+					con = DriverManager.getConnection("jdbc:mysql://localhost/micro_star","root","");
+					pst = con.prepareStatement(sql);
+					pst.setString(1,respond_id.getText());
+					pst.setString(2,technician_id_.getText());
+					pst.setString(3,customer_id_.getText());
+					pst.setString(4,created_at_1.getText());
+					pst.setString(5,updated_at_1.getText());
+					
+					
+					
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "inserted successfully");
+					 
+					}
+					catch(SQLException | HeadlessException ex){
+					JOptionPane.showMessageDialog(null, ex);
+					}
+			
+
+			}
+				
+				
+				
+				
+				
+			
+			
+		});
+		btnNewButton_1.setBounds(411, 331, 117, 39);
+		respondPanel.add(btnNewButton_1);
+		
 		assignPanel = new JPanel();
 		assignPanel.setFocusable(false);
 		assignPanel.setBackground(new Color(220, 220, 220));
@@ -418,7 +741,7 @@ public class Main {
 		separator_8.setBounds(75, 23, 595, 2);
 		assignPanel.add(separator_8);
 		
-		JButton deleteSearchBtn = new JButton("Search");
+		JButton deleteSearchBtn = new JButton("Assign Technician");
 		deleteSearchBtn.setFocusable(false);
 		deleteSearchBtn.setIconTextGap(0);
 		deleteSearchBtn.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
@@ -427,11 +750,38 @@ public class Main {
 		deleteSearchBtn.setBackground(new Color(211, 211, 211));
 		deleteSearchBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				Connection con = null;
+				PreparedStatement pst = null;
+				ResultSet rs = null;
 				
+				
+				
+				try{
+					String sql = "INSERT INTO technicians"
+					+"(technician_id,created_at,updated_at) "
+					+"VALUES (?,?,?)";
+					con = DriverManager.getConnection("jdbc:mysql://localhost/micro_star","root","");
+					pst = con.prepareStatement(sql);
+					pst.setString(1,technician_id.getText());
+					pst.setString(2,created_at.getText());
+					pst.setString(3,updated_at.getText());
+					
+			
+					
+					
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "inserted successfully");
+					 
+					}
+					catch(SQLException | HeadlessException ex){
+					JOptionPane.showMessageDialog(null, ex);
+					}
+			
 			}
+				
+			
 		});
-		deleteSearchBtn.setBounds(364, 407, 89, 27);
+		deleteSearchBtn.setBounds(364, 407, 109, 27);
 		assignPanel.add(deleteSearchBtn);
 		
 		textField = new JTextField();
@@ -442,6 +792,46 @@ public class Main {
 		textField.setBounds(168, 411, 159, 20);
 		assignPanel.add(textField);
 		
+		JButton deleteSearchBtn_1 = new JButton("Search");
+		deleteSearchBtn_1.setIconTextGap(0);
+		deleteSearchBtn_1.setForeground(Color.DARK_GRAY);
+		deleteSearchBtn_1.setFont(new Font("Dialog", Font.PLAIN, 13));
+		deleteSearchBtn_1.setFocusable(false);
+		deleteSearchBtn_1.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		deleteSearchBtn_1.setBackground(new Color(211, 211, 211));
+		deleteSearchBtn_1.setBounds(515, 407, 89, 27);
+		assignPanel.add(deleteSearchBtn_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Technicians");
+		lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(110, 115, 102, 14);
+		assignPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Created At");
+		lblNewLabel_2_1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel_2_1.setBounds(110, 161, 72, 14);
+		assignPanel.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("Updated At");
+		lblNewLabel_2_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNewLabel_2_1_1.setBounds(110, 217, 72, 14);
+		assignPanel.add(lblNewLabel_2_1_1);
+		
+		technician_id = new JTextField();
+		technician_id.setBounds(311, 113, 162, 32);
+		assignPanel.add(technician_id);
+		technician_id.setColumns(10);
+		
+		created_at = new JTextField();
+		created_at.setColumns(10);
+		created_at.setBounds(311, 159, 162, 32);
+		assignPanel.add(created_at);
+		
+		updated_at = new JTextField();
+		updated_at.setColumns(10);
+		updated_at.setBounds(311, 202, 162, 32);
+		assignPanel.add(updated_at);
+		
 		JPanel customerPanel = new JPanel();
 		customerPanel.setLayout(null);
 		customerPanel.setBackground(new Color(211, 211, 211));
@@ -451,6 +841,78 @@ public class Main {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1.setBounds(327, 36, 184, 34);
 		customerPanel.add(lblNewLabel_1);
+		
+		txt_customer_id = new JTextField();
+		txt_customer_id.setBounds(503, 109, 170, 34);
+		customerPanel.add(txt_customer_id);
+		txt_customer_id.setColumns(10);
+		
+		txt_created_at1 = new JTextField();
+		txt_created_at1.setColumns(10);
+		txt_created_at1.setBounds(503, 166, 170, 34);
+		customerPanel.add(txt_created_at1);
+		
+		txt_updated_at1 = new JTextField();
+		txt_updated_at1.setColumns(10);
+		txt_updated_at1.setBounds(503, 227, 170, 34);
+		customerPanel.add(txt_updated_at1);
+		
+		JButton btnAddCustomer = new JButton("Add Customer");
+		btnAddCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Connection con = null;
+				PreparedStatement pst = null;
+				ResultSet rs = null;
+				
+				
+				
+				try{
+					String sql = "INSERT INTO customers"
+					+"(customer_id, created_at,customer_id,updated_at) "
+					+"VALUES (?,?,?)";
+					con = DriverManager.getConnection("jdbc:mysql://localhost/micro_star","root","");
+					pst = con.prepareStatement(sql);
+					pst.setString(1,txt_customer_id.getText());
+					pst.setString(2,txt_created_at1.getText());
+					pst.setString(3,txt_updated_at1.getText());
+				
+					
+					
+					pst.executeUpdate();
+					JOptionPane.showMessageDialog(null, "inserted successfully");
+					 
+					}
+					catch(SQLException | HeadlessException ex){
+					JOptionPane.showMessageDialog(null, ex);
+					}
+			
+
+			}
+				
+				
+			
+		});
+		btnAddCustomer.setIconTextGap(0);
+		btnAddCustomer.setForeground(Color.DARK_GRAY);
+		btnAddCustomer.setFont(new Font("Dialog", Font.PLAIN, 13));
+		btnAddCustomer.setFocusable(false);
+		btnAddCustomer.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		btnAddCustomer.setBackground(new Color(211, 211, 211));
+		btnAddCustomer.setBounds(503, 299, 109, 27);
+		customerPanel.add(btnAddCustomer);
+		
+		JLabel lblNewLabel_4 = new JLabel("Customer ID");
+		lblNewLabel_4.setBounds(123, 119, 91, 24);
+		customerPanel.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Created At");
+		lblNewLabel_4_1.setBounds(123, 176, 91, 24);
+		customerPanel.add(lblNewLabel_4_1);
+		
+		JLabel lblNewLabel_4_1_1 = new JLabel("Updated At");
+		lblNewLabel_4_1_1.setBounds(123, 237, 91, 24);
+		customerPanel.add(lblNewLabel_4_1_1);
 		
 		JPanel technicianPanel = new JPanel();
 		technicianPanel.setLayout(null);
@@ -498,7 +960,4 @@ public class Main {
 							String.valueOf(cal.get(Calendar.YEAR)));
 	
 	}
-
-
-	 
 }
