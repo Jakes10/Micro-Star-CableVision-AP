@@ -196,6 +196,43 @@ public class Main {
 		
 		dashboardPanel = new JPanel();
 		selectPanel.add(dashboardPanel, "name_7386572354584");
+		dashboardPanel.setLayout(null);
+		
+		JButton btnAdd1 = new JButton("Services");
+		btnAdd1.setBounds(56, 397, 117, 36);
+		btnAdd1.setForeground(Color.DARK_GRAY);
+		btnAdd1.setFont(new Font("Dialog", Font.PLAIN, 17));
+		btnAdd1.setFocusable(false);
+		btnAdd1.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		btnAdd1.setBackground(new Color(211, 211, 211));
+		dashboardPanel.add(btnAdd1);
+		
+		JButton btnView1 = new JButton("Complaints");
+		btnView1.setBounds(229, 397, 117, 36);
+		btnView1.setForeground(Color.DARK_GRAY);
+		btnView1.setFont(new Font("Dialog", Font.PLAIN, 17));
+		btnView1.setFocusable(false);
+		btnView1.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		btnView1.setBackground(new Color(211, 211, 211));
+		dashboardPanel.add(btnView1);
+		
+		JButton btnUpdateRecords = new JButton("Assign");
+		btnUpdateRecords.setBounds(402, 397, 117, 36);
+		btnUpdateRecords.setForeground(Color.DARK_GRAY);
+		btnUpdateRecords.setFont(new Font("Dialog", Font.PLAIN, 17));
+		btnUpdateRecords.setFocusable(false);
+		btnUpdateRecords.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		btnUpdateRecords.setBackground(new Color(211, 211, 211));
+		dashboardPanel.add(btnUpdateRecords);
+		
+		JButton btnDeleteRecords = new JButton("Respond");
+		btnDeleteRecords.setBounds(575, 397, 117, 36);
+		btnDeleteRecords.setForeground(Color.DARK_GRAY);
+		btnDeleteRecords.setFont(new Font("Dialog", Font.PLAIN, 17));
+		btnDeleteRecords.setFocusable(false);
+		btnDeleteRecords.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
+		btnDeleteRecords.setBackground(new Color(211, 211, 211));
+		dashboardPanel.add(btnDeleteRecords);
 		
 		servicePanel = new JPanel();
 		selectPanel.add(servicePanel, "name_7390094721899");
