@@ -135,6 +135,11 @@ public class Main {
 		representativePanel.add(mainLabel);
 		
 		mainBtnDashboard = new JButton("Dashboard");
+		mainBtnDashboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(0);
+			}
+		});
 		mainBtnDashboard.setHorizontalTextPosition(SwingConstants.RIGHT);
 		mainBtnDashboard.setHorizontalAlignment(SwingConstants.LEFT);
 		mainBtnDashboard.setForeground(new Color(0, 191, 255));
@@ -146,6 +151,11 @@ public class Main {
 		representativePanel.add(mainBtnDashboard);
 		
 		ServiceBtn = new JButton("Services");
+		ServiceBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(1);
+			}
+		});
 		ServiceBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
 		ServiceBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		ServiceBtn.setForeground(Color.DARK_GRAY);
@@ -157,6 +167,11 @@ public class Main {
 		representativePanel.add(ServiceBtn);
 		
 		complainBtn = new JButton("Complaints");
+		complainBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(2);
+			}
+		});
 		complainBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
 		complainBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		complainBtn.setForeground(Color.DARK_GRAY);
@@ -168,6 +183,11 @@ public class Main {
 		representativePanel.add(complainBtn);
 		
 		respondBtn = new JButton("Respond to Enquiry");
+		respondBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(3);
+			}
+		});
 		respondBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
 		respondBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		respondBtn.setForeground(Color.DARK_GRAY);
@@ -179,6 +199,11 @@ public class Main {
 		representativePanel.add(respondBtn);
 		
 		assignBtn = new JButton("Assign Complaint");
+		assignBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(4);
+			}
+		});
 		assignBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
 		assignBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		assignBtn.setForeground(Color.DARK_GRAY);
@@ -199,6 +224,11 @@ public class Main {
 		dashboardPanel.setLayout(null);
 		
 		JButton btnAdd1 = new JButton("Services");
+		btnAdd1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(1);
+			}
+		});
 		btnAdd1.setBounds(56, 397, 117, 36);
 		btnAdd1.setForeground(Color.DARK_GRAY);
 		btnAdd1.setFont(new Font("Dialog", Font.PLAIN, 17));
@@ -208,6 +238,11 @@ public class Main {
 		dashboardPanel.add(btnAdd1);
 		
 		JButton btnView1 = new JButton("Complaints");
+		btnView1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(2);
+			}
+		});
 		btnView1.setBounds(229, 397, 117, 36);
 		btnView1.setForeground(Color.DARK_GRAY);
 		btnView1.setFont(new Font("Dialog", Font.PLAIN, 17));
@@ -217,6 +252,11 @@ public class Main {
 		dashboardPanel.add(btnView1);
 		
 		JButton btnUpdateRecords = new JButton("Assign");
+		btnUpdateRecords.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(4);
+			}
+		});
 		btnUpdateRecords.setBounds(402, 397, 117, 36);
 		btnUpdateRecords.setForeground(Color.DARK_GRAY);
 		btnUpdateRecords.setFont(new Font("Dialog", Font.PLAIN, 17));
@@ -226,6 +266,11 @@ public class Main {
 		dashboardPanel.add(btnUpdateRecords);
 		
 		JButton btnDeleteRecords = new JButton("Respond");
+		btnDeleteRecords.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPanel(3);
+			}
+		});
 		btnDeleteRecords.setBounds(575, 397, 117, 36);
 		btnDeleteRecords.setForeground(Color.DARK_GRAY);
 		btnDeleteRecords.setFont(new Font("Dialog", Font.PLAIN, 17));
