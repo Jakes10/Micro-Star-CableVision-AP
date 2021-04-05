@@ -4,77 +4,127 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
- 
+
 
 import controller.Connection;
- 
+import model.User;
+
 
 public class Validation {
-	
-	public boolean Login(String userEmail, String password, String userType) {
-		
-		
-		Connection connect = new Connection();
-		
-		 
-//		 System.out.println(userType);
-//		 System.out.println(userEmail);
-		 if(userType.isEmpty() || userType.length()==0 || userType.equals("Select Login Type") ){
-			 	required("Login Type");
-				return false;
-			}
-		 
-		 
-		 if(userEmail.isEmpty() || userEmail.length()==0 ){
-			 	required("Email");
-				return false;
-		}else{
-//			public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-//				    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-			
-			Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-			Matcher m = p.matcher(userEmail);
+	Connection connect = new Connection();
 
-			if (!m.find()){
-				JOptionPane.showMessageDialog(null,"Incorrect Email format!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
+	public boolean Login(User user) {
+		//		String userEmail, String password, String userType
+
+
+
+
+		//		 System.out.println(userType);
+		//		 System.out.println(userEmail);
+		if(user.getType().isEmpty() || user.getType().length()==0 || user.getType().equals("Select User Type") ){
+			required("Login Type");
+			return false;
 		}
-		 
-		 
-		 
-		 if(password.isEmpty() || password.length()==0  ){
-			 	required("Password");
+
+
+		if(user.getId().isEmpty() || user.getId().length()==0){
+			required("User ID");
+			return false;
+		}else{ 
+			try{				
+
+				Integer.parseInt(user.getId());
+			}catch(NumberFormatException e2){
+				JOptionPane.showMessageDialog(null,"Invalid User ID!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
+				return false;
+			} 
+		}
+
+
+
+		if(user.getPassword().isEmpty() || user.getPassword().length()==0  ){
+			required("Password");
+			return false;
+		}
+
+
+
+
+
+
+
+
+		return connect.LoginAuthentification(user);
+	}
+
+
+	public boolean UserRegistration(User user) {
+
+
+		if(user.getType().equals("Select User Type")){
+			required("User Type");
+			return false;
+		}
+
+		if(user.getFirstName().isEmpty() || user.getFirstName().length()==0){
+			required("First Name");
+			return false;
+		}
+
+		if(user.getLastName().isEmpty() || user.getLastName().length()==0){
+			required("Last Name");
+			return false;
+		}
+
+
+		if(user.getMobile().isEmpty() || user.getMobile().length()==0){
+			required("Mobile");
+			return false;
+		}else {
+
+			//				 try{
+			//					 Integer.parseInt(user.getMobile());
+			//				}catch(NumberFormatException e2){
+			//						JOptionPane.showMessageDialog(null,"Please use only digits for mobile!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
+			//						return false;
+			//				}
+
+			if(user.getMobile().length()<7 || user.getMobile().length()>10) {
+				JOptionPane.showMessageDialog(null,"Invalid Mobile Number!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}	
+		}
+
+
+
+		if(user.getEmail().isEmpty() || user.getEmail().length()==0){
+			required("Email");
+			return false;
+		}else {
+
+
+			Matcher matcher = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(user.getEmail());
+			if(!matcher.find()) {
+
+				JOptionPane.showMessageDialog(null, "Incorrect Email Format\n","Error Occured", JOptionPane.ERROR_MESSAGE);
+
 				return false;
 			}
-		 
-		 
-		 if(!userEmail.contains("DR") && userType.equals("Doctor")) {
-			 JOptionPane.showMessageDialog(null,userEmail+" is not a "+userType+" ID!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
-				return false;
-		 }
-		 
-		 if(!userEmail.contains("NS") && userType.equals("Nurse")) {
-			 JOptionPane.showMessageDialog(null,userEmail+" is not a "+userType+" ID!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
-				return false;
-		 }
-		 
-		 if(!userEmail.contains("RT") && userType.equals("Receptionist")) {
-				JOptionPane.showMessageDialog(null,userEmail+" is not a "+userType+" ID!\n","Error Occured", JOptionPane.ERROR_MESSAGE);
-				return false;
-		 }
-		
-		
-		
-		 
-		 
-		return connect.LoginAuthentification(userEmail, password);
+
+
+		}
+
+
+		return connect.AddUser(user);
+
+		//		return true;
 	}
-	
-	
+
+
+
 	private void required(String input) {
 		JOptionPane.showMessageDialog(null, input+" is Required\n","Error Occured", JOptionPane.ERROR_MESSAGE);
-		
+
 	}
 
 }

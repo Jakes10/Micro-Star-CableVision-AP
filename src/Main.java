@@ -11,6 +11,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import model.User;
+import services.Crypto;
 import services.Validation;
 
 import javax.swing.JButton;
@@ -59,34 +61,35 @@ public class Main {
 	private JPanel servicePanel;
 	private JPanel dashboardPanel;
 	private JLabel mainLabel;
-	private JTextField email;
+	private JTextField userID;
 	private JTextField password;
 	private JPanel loginPanel;
 	private JPanel representativePanel;
 	private JPanel customerPanel;
 	private JPanel technicianPanel;
 	private JPanel registerPanel;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField regEmail;
+	private JTextField regPassword;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_2_2;
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_3_2;
 	private JLabel lblNewLabel_3_1_2;
 	private JLabel lblNewLabel_3_1_1_2;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField regFirstName;
+	private JTextField regLastName;
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_3_3;
 	private JLabel lblNewLabel_3_4;
-	private JTextField textField_6;
+	private JTextField regMobile;
 	private JButton btnLogin;
 	private JLabel timeAndDate;
 	String pass;
 	
-	String[] users = { "Select Login Type","Customer", "Representative", "Technician" };
+	String[] users = { "Select User Type","Customer", "Representative", "Technician" };
 	private JComboBox loginType;
 	Validation validate = new Validation();
+	private JComboBox regUserType;
 	
 	/**
 	 * Launch the application.
@@ -189,10 +192,10 @@ public class Main {
 		loginPanel.setLayout(null);
 		UserPanel.add(loginPanel, "name_100830795326703");
 		
-		email = new JTextField();
-		email.setColumns(10);
-		email.setBounds(378, 321, 273, 28);
-		loginPanel.add(email);
+		userID = new JTextField();
+		userID.setColumns(10);
+		userID.setBounds(378, 321, 273, 28);
+		loginPanel.add(userID);
 		
 		password = new JPasswordField(); 
 		password.setColumns(10);
@@ -209,10 +212,10 @@ public class Main {
 		JLabel lblNewLabel_2_1 = new JLabel("Login");
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2_1.setFont(new Font("Segoe Print", Font.ITALIC, 37));
-		lblNewLabel_2_1.setBounds(400, 124, 197, 80);
+		lblNewLabel_2_1.setBounds(378, 82, 197, 80);
 		loginPanel.add(lblNewLabel_2_1);
 		
-		JLabel lblNewLabel_3 = new JLabel("Email");
+		JLabel lblNewLabel_3 = new JLabel("ID");
 		lblNewLabel_3.setFont(new Font("Segoe Print", Font.PLAIN, 14));
 		lblNewLabel_3.setBounds(378, 291, 80, 22);
 		loginPanel.add(lblNewLabel_3);
@@ -245,8 +248,27 @@ public class Main {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				validate.Login(email.getText().toString(), password.getText().toString(), loginType.getSelectedItem().toString());
+				User user = new User();
+				user.setId(userID.getText().toString());
+				user.setType( loginType.getSelectedItem().toString());
+				user.setPassword(password.getText().toString());
 				
+				if(validate.Login(user)) {
+					
+					if(loginType.getSelectedItem().toString().equals("Customer")) {
+						setMainPanel(2); 
+					}else if(loginType.getSelectedItem().toString().equals("Representative")) {
+						setMainPanel(1); 
+					}else if(loginType.getSelectedItem().toString().equals("Technician")) {
+						setMainPanel(3); 
+					}
+					resetLoginFeilds();
+					
+				}
+					
+				
+//				System.out.println(new String(Crypto.Encrypt("Alpha".getBytes())));
+//				System.out.println(new String(Crypto.Decrypt(new String(Crypto.Encrypt("Alpha".getBytes())).getBytes())));
 			}
 		});
 		btnLogin.setForeground(Color.DARK_GRAY);
@@ -442,7 +464,7 @@ public class Main {
 		customerPanel.setBackground(new Color(211, 211, 211));
 		UserPanel.add(customerPanel, "name_695582208484637");
 		
-		JLabel lblNewLabel_1 = new JLabel("Technician Panel");
+		JLabel lblNewLabel_1 = new JLabel("Customer Panel");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1.setBounds(327, 36, 184, 34);
 		customerPanel.add(lblNewLabel_1);
@@ -461,15 +483,15 @@ public class Main {
 		UserPanel.add(registerPanel, "name_6944047469471");
 		registerPanel.setLayout(null);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(393, 355, 273, 28);
-		registerPanel.add(textField_2);
+		regEmail = new JTextField();
+		regEmail.setColumns(10);
+		regEmail.setBounds(436, 377, 273, 28);
+		registerPanel.add(regEmail);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(393, 402, 273, 28);
-		registerPanel.add(textField_3);
+		regPassword = new JPasswordField();
+		regPassword.setColumns(10);
+		regPassword.setBounds(436, 424, 273, 28);
+		registerPanel.add(regPassword);
 		
 		lblNewLabel_4 = new JLabel("Micro Star Cable Vission");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -481,25 +503,25 @@ public class Main {
 		lblNewLabel_2_2 = new JLabel("Register");
 		lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2_2.setFont(new Font("Segoe Print", Font.ITALIC, 35));
-		lblNewLabel_2_2.setBounds(384, 88, 226, 80);
+		lblNewLabel_2_2.setBounds(379, 53, 226, 80);
 		registerPanel.add(lblNewLabel_2_2);
 		
 		lblNewLabel_5 = new JLabel("Email");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_5.setFont(new Font("Segoe Print", Font.PLAIN, 14));
-		lblNewLabel_5.setBounds(304, 354, 80, 22);
+		lblNewLabel_5.setBounds(347, 376, 80, 22);
 		registerPanel.add(lblNewLabel_5);
 		
 		lblNewLabel_3_2 = new JLabel("Password");
 		lblNewLabel_3_2.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_3_2.setFont(new Font("Segoe Print", Font.PLAIN, 14));
-		lblNewLabel_3_2.setBounds(291, 408, 93, 22);
+		lblNewLabel_3_2.setBounds(334, 430, 93, 22);
 		registerPanel.add(lblNewLabel_3_2);
 		
 		lblNewLabel_3_1_2 = new JLabel("Already Registererd?");
 		lblNewLabel_3_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_3_1_2.setFont(new Font("Palatino Linotype", Font.PLAIN, 12));
-		lblNewLabel_3_1_2.setBounds(486, 440, 174, 22);
+		lblNewLabel_3_1_2.setBounds(529, 462, 174, 22);
 		registerPanel.add(lblNewLabel_3_1_2);
 		
 		lblNewLabel_3_1_1_2 = new JLabel("Click here");
@@ -512,50 +534,92 @@ public class Main {
 		lblNewLabel_3_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_3_1_1_2.setForeground(SystemColor.desktop);
 		lblNewLabel_3_1_1_2.setFont(new Font("Palatino Linotype", Font.PLAIN, 12));
-		lblNewLabel_3_1_1_2.setBounds(609, 440, 68, 22);
+		lblNewLabel_3_1_1_2.setBounds(652, 462, 68, 22);
 		registerPanel.add(lblNewLabel_3_1_1_2);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(393, 201, 273, 28);
-		registerPanel.add(textField_4);
+		regFirstName = new JTextField();
+		regFirstName.setColumns(10);
+		regFirstName.setBounds(436, 223, 273, 28);
+		registerPanel.add(regFirstName);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(393, 250, 273, 28);
-		registerPanel.add(textField_5);
+		regLastName = new JTextField();
+		regLastName.setColumns(10);
+		regLastName.setBounds(436, 272, 273, 28);
+		registerPanel.add(regLastName);
 		
 		lblNewLabel_6 = new JLabel("First Name");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_6.setFont(new Font("Segoe Print", Font.PLAIN, 14));
-		lblNewLabel_6.setBounds(281, 200, 103, 22);
+		lblNewLabel_6.setBounds(324, 222, 103, 22);
 		registerPanel.add(lblNewLabel_6);
 		
 		lblNewLabel_3_3 = new JLabel("Last Name");
 		lblNewLabel_3_3.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_3_3.setFont(new Font("Segoe Print", Font.PLAIN, 14));
-		lblNewLabel_3_3.setBounds(291, 256, 93, 22);
+		lblNewLabel_3_3.setBounds(334, 278, 93, 22);
 		registerPanel.add(lblNewLabel_3_3);
 		
 		lblNewLabel_3_4 = new JLabel("Mobile");
 		lblNewLabel_3_4.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_3_4.setFont(new Font("Segoe Print", Font.PLAIN, 14));
-		lblNewLabel_3_4.setBounds(291, 307, 93, 22);
+		lblNewLabel_3_4.setBounds(334, 329, 93, 22);
 		registerPanel.add(lblNewLabel_3_4);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(393, 301, 273, 28);
-		registerPanel.add(textField_6);
+		regMobile = new JTextField();
+		regMobile.setColumns(10);
+		regMobile.setBounds(436, 323, 273, 28);
+		registerPanel.add(regMobile);
 		
 		JButton btnRegister = new JButton("Register");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				User user = new User();
+				user.setFirstName(regFirstName.getText().toString());
+				user.setLastName(regLastName.getText().toString());
+				user.setMobile(regMobile.getText().toString());
+				user.setEmail(regEmail.getText().toString());
+				user.setType(regUserType.getSelectedItem().toString());
+				user.setPassword(regPassword.getText().toString());
+				
+				
+//				System.out.println(regUserType.getSelectedItem().toString());
+				
+				if(validate.UserRegistration(user)) {
+					 
+						if(regUserType.getSelectedItem().toString().equals("Customer")) {
+							setMainPanel(2); 
+						}else if(regUserType.getSelectedItem().toString().equals("Representative")) {
+							setMainPanel(1); 
+						}else if(regUserType.getSelectedItem().toString().equals("Technician")) {
+							setMainPanel(3); 
+						} 
+						resetRegistrationFeilds();
+				 
+				}
+					
+			}
+
+		
+		});
 		btnRegister.setForeground(Color.DARK_GRAY);
 		btnRegister.setFont(new Font("Dialog", Font.PLAIN, 17));
 		btnRegister.setFocusable(false);
 		btnRegister.setBorder(new LineBorder(new Color(0, 191, 255), 1, true));
 		btnRegister.setBackground(new Color(211, 211, 211));
-		btnRegister.setBounds(549, 482, 117, 36);
+		btnRegister.setBounds(592, 504, 117, 36);
 		registerPanel.add(btnRegister);
+		
+		regUserType = new JComboBox(users);
+		regUserType.setFocusable(false);
+		regUserType.setBackground(Color.WHITE);
+		regUserType.setBounds(436, 171, 273, 28);
+		registerPanel.add(regUserType);
+		
+		JLabel lblNewLabel_6_1 = new JLabel("User Type");
+		lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_6_1.setFont(new Font("Segoe Print", Font.PLAIN, 14));
+		lblNewLabel_6_1.setBounds(324, 177, 103, 22);
+		registerPanel.add(lblNewLabel_6_1);
 		
 		JLabel lblAllRights = new JLabel("Micro Star Cable Vission");
 		lblAllRights.setBounds(10, 597, 180, 19);
@@ -577,7 +641,23 @@ public class Main {
 	}
 	
 
+	private void resetRegistrationFeilds() {
+	regFirstName.setText("");
+	regLastName.setText("");
+		regMobile.setText("");
+		regEmail.setText("");
+		regUserType.setSelectedIndex(0);
+		regPassword.setText("");
+		
+	}
 
+	private void resetLoginFeilds() {
+		userID.setText("");
+		loginType.setSelectedIndex(0);
+		password.setText(""); 
+			
+		}
+	
 	private void displayDate() {
 		// TODO Auto-generated method stub
 		String[] monthName = {"January", "February",
